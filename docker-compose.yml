@@ -1,0 +1,13 @@
+services: 
+  dev-database-server:
+    image: 'postgres:15.0'
+    ports:
+      - "5436:5432"  # Use 5432 as the internal Postgres port
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: web-gpt-database
+    networks:
+      - nestjs-server
+networks:
+  nestjs-server:
