@@ -17,9 +17,17 @@ export class Prompt {
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date;
   
+  @Column("text", { array: true, nullable: true })
+  tags: string[];
+
   @Column({ nullable: true })
   type: string;
 
+  @Column({ nullable: true })
+  status?: string;
+  @Column({ nullable: true , default: 'Admin'})
+  author?: string;
+  
   constructor(prompt: Partial<Prompt>) {
     if (prompt) {
       Object.assign(this, prompt);

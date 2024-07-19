@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PromptModule } from './prompt/prompt.module';
 import { Prompt } from './prompt/entities/prompt.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { Prompt } from './prompt/entities/prompt.entity';
       inject: [ConfigService], // Don't forget to inject ConfigService
     }),
     PromptModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
