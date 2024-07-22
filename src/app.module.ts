@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PromptModule } from './prompt/prompt.module';
 import { Prompt } from './prompt/entities/prompt.entity';
 import { AuthModule } from './auth/auth.module';
+import { User } from './auth/entities/user.entity';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { AuthModule } from './auth/auth.module';
         username: configService.get('DATABASE_USERNAME'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),
-        entities: [Prompt], // Add your entities here
+        entities: [Prompt, User], // Add your entities here
         synchronize: true,
       }),
       inject: [ConfigService], // Don't forget to inject ConfigService

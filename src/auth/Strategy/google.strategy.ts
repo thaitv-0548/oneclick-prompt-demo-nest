@@ -7,9 +7,16 @@ import {
 import {
     Strategy
 } from 'passport-google-oauth20'
+import { AuthService } from '../auth.service';
+import { Profile } from 'passport';
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-    constructor(private configService: ConfigService) {
+    
+    constructor(
+        private configService: ConfigService,
+        private authService: AuthService
+
+    ) {
         super({
             clientID: configService.get<string>('GOOGLE_CLIENT_ID'),
             clientSecret: configService.get<string>('GOOGLE_CLIENT_SECRET'),
@@ -17,8 +24,15 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
             scope: ['profile', 'email']
         })
     }
-
-    async validate(accessToken: string, refreshToken: string, profile: string) {
-        console.log('validate', accessToken, refreshToken, profile);
+    async validate(profile: Profile) {
+        // console.log('validate', profile)
+        const email = profile.emails[0].value;
+        const displayName = profile.displayName;
+        const user = await this.authService.validateUser({
+            email: email,
+            displayName: displayName,
+        });
+        
+        return user || null;
     }
 }
